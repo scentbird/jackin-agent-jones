@@ -39,20 +39,5 @@ RUN mise install protoc@latest && \
 RUN mise exec node@lts -- npm install -g ctx7
 
 # Docker convenience functions
-RUN cat >> /home/claude/.zshrc <<'ZSHRC'
-
-# Stop and remove all Docker containers
-docker_stop_rm_all() {
-  docker stop $(docker ps -qa) 2>/dev/null
-  docker rm $(docker ps -qa) 2>/dev/null
-}
-
-# Full Docker cleanup (containers, images, networks, volumes)
-docker_clean_all() {
-  docker_stop_rm_all
-  docker rmi --force $(docker images -qa) 2>/dev/null
-  docker network rm $(docker network ls -q) 2>/dev/null
-  docker system prune --force
-  docker volume prune --force
-}
-ZSHRC
+COPY --chown=claude:claude zshrc.d/docker-helpers.zsh /home/claude/.zshrc.d/docker-helpers.zsh
+RUN echo 'source /home/claude/.zshrc.d/docker-helpers.zsh' >> /home/claude/.zshrc
