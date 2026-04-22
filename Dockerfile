@@ -41,3 +41,11 @@ RUN mise exec node@lts -- npm install -g ctx7
 # Docker convenience functions
 COPY --chown=claude:claude zshrc.d/docker-helpers.zsh /home/claude/.zshrc.d/docker-helpers.zsh
 RUN echo 'source /home/claude/.zshrc.d/docker-helpers.zsh' >> /home/claude/.zshrc
+
+# Git convenience functions (parallel pull/push/status across subdirs)
+COPY --chown=claude:claude zshrc.d/git-helpers.zsh /home/claude/.zshrc.d/git-helpers.zsh
+RUN echo 'source /home/claude/.zshrc.d/git-helpers.zsh' >> /home/claude/.zshrc
+
+# Java/Gradle/IDEA cleanup functions
+COPY --chown=claude:claude zshrc.d/java-helpers.zsh /home/claude/.zshrc.d/java-helpers.zsh
+RUN echo 'source /home/claude/.zshrc.d/java-helpers.zsh' >> /home/claude/.zshrc
